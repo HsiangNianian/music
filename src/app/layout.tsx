@@ -5,6 +5,7 @@ import { ThemeProvider } from "@/components/layout/theme-provider"
 import { Header } from "@/components/layout/header"
 import { Footer } from "@/components/layout/footer"
 import { PlayerBar } from "@/components/player/player-bar"
+import { Preloader } from "@/components/preloader"
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -39,16 +40,19 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body className="min-h-screen flex flex-col">
+        <Preloader />
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
           enableSystem
           disableTransitionOnChange
         >
-          <Header />
-          <main className="flex-1 pb-20">{children}</main>
-          <Footer />
-          <PlayerBar />
+          <div className="relative z-10 flex min-h-screen flex-col">
+            <Header />
+            <main className="flex-1 pb-20">{children}</main>
+            <Footer />
+            <PlayerBar />
+          </div>
         </ThemeProvider>
       </body>
     </html>

@@ -15,9 +15,13 @@ export function ThemeToggle() {
 
   if (!mounted) {
     return (
-      <Button variant="ghost" size="icon" disabled aria-label="切换主题">
+      <button
+        disabled
+        aria-label="切换主题"
+        className="group/button inline-flex shrink-0 items-center justify-center rounded-lg border border-transparent size-8 bg-clip-padding text-sm font-medium whitespace-nowrap transition-all outline-none select-none opacity-50"
+      >
         <Sun className="h-5 w-5" />
-      </Button>
+      </button>
     )
   }
 

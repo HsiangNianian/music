@@ -157,6 +157,35 @@
   to { transform: rotate(360deg); }
 }
 
+/* Equalizer bars for hero visualizer */
+@keyframes equalizer {
+  0%, 100% { height: 15%; }
+  10% { height: 65%; }
+  20% { height: 35%; }
+  30% { height: 85%; }
+  40% { height: 45%; }
+  50% { height: 70%; }
+  60% { height: 25%; }
+  70% { height: 90%; }
+  80% { height: 55%; }
+  90% { height: 40%; }
+}
+
+.visualizer-bar {
+  animation: equalizer var(--duration, 1.4s) ease-in-out infinite;
+  animation-delay: var(--delay, 0s);
+}
+
+.animate-equalizer {
+  animation: equalizer 0.8s ease-in-out infinite;
+}
+
+/* Twinkle for stars */
+@keyframes twinkle {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.3); }
+}
+
 /* Utility classes for custom animations */
 .animate-float {
   animation: float 6s ease-in-out infinite;
@@ -206,6 +235,193 @@
   background-repeat: repeat;
   pointer-events: none;
   z-index: 1;
+}
+
+/* ───── Glitch Text ───── */
+@keyframes glitch-shift {
+  0%, 90%, 100% { transform: translate(0); }
+  92% { transform: translate(-2px, 1px); }
+  94% { transform: translate(2px, -1px); }
+  96% { transform: translate(-1px, 2px); }
+  98% { transform: translate(1px, -2px); }
+}
+
+@keyframes glitch-skew {
+  0%, 90%, 100% { transform: skew(0deg); }
+  92% { transform: skew(0.5deg); }
+  96% { transform: skew(-0.5deg); }
+}
+
+@keyframes glitch-clip {
+  0%, 100% { clip-path: inset(0 0 80% 0); }
+  10% { clip-path: inset(20% 0 60% 0); }
+  20% { clip-path: inset(40% 0 40% 0); }
+  30% { clip-path: inset(60% 0 20% 0); }
+  40% { clip-path: inset(80% 0 0 0); }
+  50% { clip-path: inset(10% 0 70% 0); }
+  60% { clip-path: inset(50% 0 30% 0); }
+  70% { clip-path: inset(30% 0 50% 0); }
+  80% { clip-path: inset(70% 0 10% 0); }
+}
+
+.glitch-text {
+  position: relative;
+  animation: glitch-skew 4s infinite;
+}
+
+.glitch-text::before,
+.glitch-text::after {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.glitch-text::before {
+  animation: glitch-clip 3s infinite linear;
+  color: oklch(0.7 0.15 280 / 0.6);
+  z-index: -1;
+}
+
+.glitch-text::after {
+  animation: glitch-clip 2s infinite linear reverse;
+  color: oklch(0.75 0.15 200 / 0.5);
+  z-index: -2;
+}
+
+/* ───── Preloader ───── */
+@keyframes preloader-char-in {
+  from {
+    opacity: 0;
+    transform: translateY(60px) rotateX(-40deg);
+    filter: blur(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) rotateX(0);
+    filter: blur(0);
+  }
+}
+
+@keyframes preloader-char-out {
+  from {
+    opacity: 1;
+    transform: translateY(0) rotateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-40px) rotateX(20deg);
+    filter: blur(5px);
+  }
+}
+
+@keyframes preloader-fade {
+  from { opacity: 1; }
+  to { opacity: 0; pointer-events: none; }
+}
+
+.preloader-char {
+  display: inline-block;
+  opacity: 0;
+  animation: preloader-char-in 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.preloader-char-out .preloader-char {
+  animation: preloader-char-out 0.5s cubic-bezier(0.55, 0, 1, 0.45) forwards;
+}
+
+.preloader-done {
+  animation: preloader-fade 0.8s ease-out forwards;
+}
+
+/* ──── Scroll Reveal ───── */
+@keyframes reveal-up {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@keyframes timeline-line-grow {
+  from { height: 0; }
+  to { height: 100%; }
+}
+
+/* ───── Timeline hover track reveal ───── */
+@keyframes track-card-in {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+    filter: blur(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+.track-card {
+  opacity: 0;
+  animation: track-card-in 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* ───── PPT Slide Style ───── */
+
+.slide-section {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+}
+
+/* Slide content centered wrapper */
+.slide-content {
+  width: 100%;
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: 4rem 1.5rem;
+}
+
+/* Transition between slides */
+@keyframes slide-in-up {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.slide-enter {
+  animation: slide-in-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Slide page number */
+.slide-number {
+  font-family: var(--font-geist-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  color: hsl(var(--foreground) / 0.15);
+}
+
+/* Section separator dot */
+.slide-dot {
+  width: 4px; height: 4px;
+  border-radius: 50%;
+  background: hsl(var(--foreground) / 0.08);
 }
 
 @layer base {
